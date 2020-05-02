@@ -9,10 +9,8 @@ function(allstates, event, ...)
             if spellID == 312996 then --红圈
                 aura_env.cantHong = {}
                 aura_env.hong = 0
+                aura_env.secondHong = aura_env.secondHong + 1
             end
-            if spellID = 306733 then
-                aura_env.secondHong = {}
-                aura_env.secondHong = 1
             if spellID == 306273 then --传电阶段
                 local _,_,_,_,duration,expirationTime = WA_GetUnitDebuff(destName, spellID)
                 aura_env.dian = aura_env.dian + 1
@@ -98,7 +96,7 @@ function(allstates, event, ...)
             end
             -- 红圈
             if spellID == 313077 then
-                if aura_env.secondHong = 0 then
+                if aura_env.secondHong == 1 then
                     local _,_,_,_,duration,expirationTime = WA_GetUnitDebuff(destName, spellID)
                 aura_env.hong = aura_env.hong + 1
                 local unitGroup = select(3,GetRaidRosterInfo(UnitInRaid(destName)))
@@ -174,7 +172,8 @@ function(allstates, event, ...)
                     }
                 end
                 --第二次红球
-            elseif aura_env.secondHong = 1 then
+            elseif aura_env.secondHong == 2 
+            then
                 local _,_,_,_,duration,expirationTime = WA_GetUnitDebuff(destName, spellID)
                 aura_env.hong = aura_env.hong + 1
                 local unitGroup = select(3,GetRaidRosterInfo(UnitInRaid(destName)))
@@ -216,7 +215,7 @@ function(allstates, event, ...)
                                         end
                                     end
                                 elseif not aura_env.cantHong[guidA] 
-                                and aura_env.myGroup == aura_env.config.option2.mainGroup 
+                                and aura_env.myGroup == aura_env.config.option2.mainGroup2 
                                 and guidA == WeakAuras.myGUID 
                                 and not UnitIsDeadOrGhost(unit)
                                 and not (WA_GetUnitDebuff(unit, 306279) or WA_GetUnitDebuff(unit, 306273))
@@ -262,4 +261,3 @@ function(allstates, event, ...)
     end
     return true
 end
-
